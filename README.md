@@ -33,19 +33,20 @@ thumb(/tmp/thumb,可在conf文件里面更改)
 * 缩略图目录根据保持原有结构，并单独设置目录，可定时清理。
 
 **链接地址对应关系**
-原图访问地址：http://img.xxx.com/upload/img/001.jpg
-缩略图访问地址：http://img.xxx.com/upload/img/001.jpg_100x100.jpg 即为宽100,高100
-自动宽地址: http://img.xxx.com/upload/img/001.jpg_-100.jpg 用"-"表示自动,即为高100,宽自动
+
+原图访问地址：http://img.xxx.com/upload/img/001.jpg <br>
+缩略图访问地址：http://img.xxx.com/upload/img/001.jpg_100x100.jpg 即为宽100,高100 <br>
+自动宽地址: http://img.xxx.com/upload/img/001.jpg_-100.jpg 用"-"表示自动,即为高100,宽自动 <br>
 自动高地址: http://img.xxx.com/upload/img/001.jpg_200-.jpg 用"-"表示自动,即为宽200,高自动
 
-**访问流程**
+**访问流程** <br>
 * 首先判断缩略图是否存在，如存在则直接显示缩略图；
 * 缩略图不存在,则判断原图是否存在，如原图存在则拼接graphicsmagick(gm)命令,生成并显示缩略图,否则返回404
 
 # 安装
 **系统环境**
-centOS7 X64 虚拟机内最小化安装 
-以下操作均在此系统中操作，仅供参考
+centOS7 X64 虚拟机内最小化安装<br>
+以下操作均在此系统中操作，仅供参考 <br>
 **1、环境准备**
 ```
 yum install -y wget  git 
@@ -53,7 +54,7 @@ yum install -y gcc gcc-c++ zlib zlib-devel openssl openssl-devel pcre pcre-devel
 yum install -y libpng libjpeg libpng-devel libjpeg-devel ghostscript libtiff libtiff-devel freetype freetype-devel
 yum install -y GraphicsMagick GraphicsMagick-devel
 ```
-如果提示没有GraphicsMagick的可用安装包，请自行安装GraphicsMagick，具体可参考我的另一篇文章：[CentOS7下安装GraphicsMagick1.3.21](http://blog.51cto.com/zhaobotao/2070287)。
+如果提示没有GraphicsMagick的可用安装包，请自行安装GraphicsMagick，具体可参考我的另一篇文章：[CentOS7下安装GraphicsMagick1.3.21](http://blog.51cto.com/zhaobotao/2070287)。<br>
 **2、下载相关应用**
 ```
 cd /usr/local/src
@@ -145,56 +146,56 @@ pid /usr/local/nginx/pid/nginx.pid;
 worker_rlimit_nofile 65535;
 events
 {
-	use epoll;
-	worker_connections 65535;
+    use epoll;
+    worker_connections 65535;
 }
 http
 {
     limit_conn_zone $binary_remote_addr zone=one:10m;
     limit_conn_zone $server_name zone=perserver:10m;
-	include mime.types;
-	include fastcgi.conf;
-	default_type application/octet-stream;
-	charset utf-8;
-	server_names_hash_bucket_size 128;
-	client_header_buffer_size 32k;
-	large_client_header_buffers 4 64k;
-	sendfile on;
-	autoindex off;
-	tcp_nopush on;
-	tcp_nodelay on;
-	keepalive_timeout 120;
+    include mime.types;
+    include fastcgi.conf;
+    default_type application/octet-stream;
+    charset utf-8;
+    server_names_hash_bucket_size 128;
+    client_header_buffer_size 32k;
+    large_client_header_buffers 4 64k;
+    sendfile on;
+    autoindex off;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 120;
 
 
-	fastcgi_connect_timeout 60;
-	fastcgi_send_timeout 60;
-	fastcgi_read_timeout 60;
-	fastcgi_buffer_size 128k;
-	fastcgi_buffers 8 128k;
-	fastcgi_busy_buffers_size 128k;
-	fastcgi_temp_file_write_size 128k;
+    fastcgi_connect_timeout 60;
+    fastcgi_send_timeout 60;
+    fastcgi_read_timeout 60;
+    fastcgi_buffer_size 128k;
+    fastcgi_buffers 8 128k;
+    fastcgi_busy_buffers_size 128k;
+    fastcgi_temp_file_write_size 128k;
 
 
-	gzip on;
-	gzip_min_length 1k;
-	gzip_buffers 4 16k;
-	gzip_http_version 1.0;
-	gzip_comp_level 2;
-	gzip_types text/plain application/x-javascript text/css application/xml;
-	gzip_vary on;
+    gzip on;
+    gzip_min_length 1k;
+    gzip_buffers 4 16k;
+    gzip_http_version 1.0;
+    gzip_comp_level 2;
+    gzip_types text/plain application/x-javascript text/css application/xml;
+    gzip_vary on;
 
-	log_format main '$remote_addr - $remote_user [$time_local] "$request" '
-	'$status $body_bytes_sent "$http_referer" '
-	'"$http_user_agent" $http_x_forwarded_for';
+    log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+    '$status $body_bytes_sent "$http_referer" '
+    '"$http_user_agent" $http_x_forwarded_for';
 
-	client_max_body_size 200m;
+    client_max_body_size 200m;
 
-	#lua_package_path "/etc/nginx/lua/?.lua";
+    #lua_package_path "/etc/nginx/lua/?.lua";
 
-	include /usr/local/nginx/vhost/*.conf;
+    include /usr/local/nginx/vhost/*.conf;
 }
 ```
-**修改站点配置**
+**修改站点配置** <br>
 普通站点的配置文件，包含固定高宽和定高,定宽两种模式配置
 ```
 cd /usr/local/nginx/
@@ -210,8 +211,8 @@ server {
     root $root_path;
 
 
-	location /lua {
-		default_type 'text/plain';
+    location /lua {
+        default_type 'text/plain';
         content_by_lua 'ngx.say("hello, ttlsa lua")';
     }
 
@@ -282,9 +283,9 @@ server {
 cd /usr/local/nginx/
 mkdir lua 
 ```
-lua文件夹下需要两个文件
-* autoSize.lua 定高或定宽模式裁切图片处理lua脚本
-* cropSize.lua 固定高宽模式裁切图片处理lua脚本
+lua文件夹下需要两个文件 <br>
+* autoSize.lua 定高或定宽模式裁切图片处理lua脚本 <br>
+* cropSize.lua 固定高宽模式裁切图片处理lua脚本 <br>
 autoSize.lua文件内容为：
 ```
 -- 根据输入长或宽的尺寸自动裁切图片大小
@@ -443,13 +444,13 @@ firewall-cmd --reload
 cd /usr/local/nginx/
 ./sbin/nginx 
 ```
-**访问查看图片**
-分别访问下面几个地址，测试能否查看及生成缩略图
-http://XXX/upload/img/001.jpg
-http://XXX/upload/img/001.jpg_-200.jpg
-http://XXX/upload/img/001.jpg_200X200.jpg
+**访问查看图片** <br>
+分别访问下面几个地址，测试能否查看及生成缩略图 <br>
+http://XXX/upload/img/001.jpg <br>
+http://XXX/upload/img/001.jpg_-200.jpg <br>
+http://XXX/upload/img/001.jpg_200X200.jpg <br>
 效果如下：
-![](http://i2.51cto.com/images/blog/201802/08/209f617bd047ecec3bdd1c59b130d63f.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=)
-此时服务器端也已经在相应路径下生成了缩略图文件：
-![](http://i2.51cto.com/images/blog/201802/08/0649761bedd11c05a243b32aa85c84db.png?x-oss-process=image/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=)
-至此，nginx+lua+GraphicsMagick生成实时缩略图完成！
+![](https://github.com/botaozhao/image/blob/master/gm_img/001.png)
+<br> 此时服务器端也已经在相应路径下生成了缩略图文件：
+![](https://github.com/botaozhao/image/blob/master/gm_img/002.png)
+<br> 至此，nginx+lua+GraphicsMagick生成实时缩略图完成！
