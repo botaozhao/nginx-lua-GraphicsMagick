@@ -287,7 +287,6 @@ lua文件夹下需要两个文件 <br>
 * [autoSize.lua](https://github.com/botaozhao/nginx-lua-GraphicsMagick/blob/master/lua/autoSize.lua) 定高或定宽模式裁切图片处理lua脚本 <br>
 * [cropSize.lua](https://github.com/botaozhao/nginx-lua-GraphicsMagick/blob/master/lua/cropSize.lua) 固定高宽模式裁切图片处理lua脚本 <br>
 
-[阿里云](https://www.aliyun.com/)
 # 访问
 **开启80端口**
 ```
