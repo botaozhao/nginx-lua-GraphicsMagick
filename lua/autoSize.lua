@@ -46,6 +46,23 @@ function getImgSize(img)
 
 end
 
+-- 判断尺寸是否合法
+-- check image size
+function table.contains(table, element)
+   for _, value in pairs(table) do
+      if value == element then
+         return true
+      end
+   end
+   return false
+end
+
+if not table.contains(image_sizes, ngx.var.img_size)
+then
+    ngx.exit(404);
+end;
+-- check image end
+
 -- 开始执行
 -- ngx.log(ngx.ERR, getFileDir(ngx.var.img_file));
 
