@@ -10,6 +10,16 @@
 -----
 
 本文使用的是Nginx+Lua+GraphicsMagick实现缩略图功能，图片的上传及删除还是交由web服务处理，缩略图由单独的模块去完成。最终效果类似淘宝图片，实现自定义图片尺寸功能，可根据图片加后缀_100x100.jpg(固定高宽),_-100.jpg(定高),_100-.jpg(定宽)形式实现自定义输出图片大小。
+# 更新说明 
+**2018-2-9:** 加入缩略图尺寸限制，需在[demo.conf](https://github.com/botaozhao/nginx-lua-GraphicsMagick/blob/master/vhost/demo.conf)中配置开关及允许的尺寸，代码片段为：
+```
+init_by_lua '
+    -- 开关 需要限制缩略图尺寸：true ,不需要限制缩略图尺寸：false
+    image_sizes_check = true
+    -- 允许的尺寸
+    image_sizes = {"800x800", "400x400", "100x100", "-800", "-400", "-100", "800-", "400-", "100-"}
+';
+```
 # 说明
 **文件夹规划**
 ```
@@ -203,6 +213,14 @@ mkdir vhost
 vi vhost/demo.conf
 ```
 ```
+#定义lua缩略图支持的图片尺寸及开关
+init_by_lua '
+    -- 开关 需要限制缩略图尺寸：true ,不需要限制缩略图尺寸：false
+    image_sizes_check = true
+    -- 允许的尺寸
+    image_sizes = {"800x800", "400x400", "100x100", "-800", "-400", "-100", "800-", "400-", "100-"}
+';
+
 server {
     listen   80;
     index index.php index.html index.htm;
