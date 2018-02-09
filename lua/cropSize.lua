@@ -42,6 +42,25 @@ function getExtension(filename)
     return filename:match(".+%.(%w+)$")
 end
 
+-- 判断尺寸是否合法
+-- 待切割的图片尺寸
+local img_width_height = ngx.var.img_width .. "x" .. ngx.var.img_height;
+-- check image size
+function table.contains(table, element)
+   for _, value in pairs(table) do
+      if value == element then
+         return true
+      end
+   end
+   return false
+end
+
+if not table.contains(image_sizes, img_width_height)
+then
+    ngx.exit(404);
+end;
+-- check image end
+
 -- 开始执行
 -- ngx.log(ngx.ERR, getFileDir(ngx.var.img_file));
 
