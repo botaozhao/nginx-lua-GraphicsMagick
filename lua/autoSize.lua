@@ -57,10 +57,13 @@ function table.contains(table, element)
    return false
 end
 
-if not table.contains(image_sizes, ngx.var.img_size)
+if image_sizes_check
 then
-    ngx.exit(404);
-end;
+    if not table.contains(image_sizes, ngx.var.img_size)
+    then
+        ngx.exit(404);
+    end
+end
 -- check image end
 
 -- 开始执行
